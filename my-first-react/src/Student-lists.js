@@ -1,44 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Student from './Student';
 const StudentLists = () => {
-    const data = [
-        {id:1, name:'Jeerawuth'},
-        {id:2, name:'Worrawan'},
-        {id:3, name:'Thammask'},
-        {id:4, name:'Sombat'},
-        {id:5, name:'Namcha'},
-        {id:6, name:'Somboon'}
-    ]
-    // const lists = data.map.name((item) => {
-    //     return (
-    //         <div key={item.id} className="col-lg-3 col-sm-4 mt-2">
-    //             <div className="card">
-    //                 <div className="card-body">
-    //                     <dl className="row">
-    //                         <dt className="col-lg-6 col-sm-5 col-6">id: </dt>
-    //                         <dd className="col-lg-6 col-sm-7 col-6">{item.id}</dd>
-    //                         <dt className="col-lg-6 col-sm-5 col-6">name: </dt>
-    //                         <dd className="col-lg-6 col-sm-7 col-6">{item.name}</dd>
-    //                     </dl>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     )
-    // })
+    const [studentsState, setStudentState] = useState (
+        {
+            students : [
+                {id:1, name:'Jeerawuth'},
+                {id:2, name:'Worrawan'},
+                {id:3, name:'Thammask'},
+                {id:4, name:'Sombat'},
+                {id:5, name:'Namcha'},
+                {id:6, name:'Somboon'}
+            ]
+        }
+    )
+    const deleteItemHandler = (deleteIndex) => {
+        const data = [...studentsState.students];
+        data.splice(deleteIndex, 1);
+        setStudentState({
+            students : data
+        });
+    }
+
     return (
         <div className="row">
-            {data.map((item) => {
+            {studentsState.students.map((item, index) => {
                 return (
                     <div key={item.id} className="col-lg-3 col-sm-4 mt-2">
-                        <div className="card">
-                            <div className="card-body">
-                                <dl className="row">
-                                    <dt className="col-6">id: </dt>
-                                    <dd className="col-6">{item.id}</dd>
-                                    <dt className="col-6">name: </dt>
-                                    <dd className="col-6">{item.name}</dd>
-                                </dl>
-                            </div>
-                        </div>
+                        <Student 
+                            data = {item}
+                            deleteStudent = {deleteItemHandler.bind(this, index)}
+                        />
                     </div>
                 )
             })}
